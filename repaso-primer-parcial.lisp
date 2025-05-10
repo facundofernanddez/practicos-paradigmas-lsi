@@ -107,4 +107,79 @@
         ( 
           (and (> mayores 150) (<= mayores 200)) (* total 0.92)) 
         ((> mayores 200) (* total 0.88))) ) 
-    (print "Cantidad inválida. Ingrese números positivos.")))
+    (print "Cantidad inválida. Ingrese números positivos."))) 
+
+(defun Triangulo() 
+  (let ((a) (b) (c)) 
+    (print "Ingrese los lados abc ") (terpri) (setq a (read)) (setq b (read)) (setq c (read)) 
+    (cond 
+      ( 
+        (not 
+          (and(> (+ a b) c) (> (+ a c) b) (> (+ b c) a))) 
+        (print "No cumple la condicion")) 
+      ((= a b c) "Equilatero") 
+      ( 
+        (or (= a b) (= a c) (= b c)) "Isosceles") (t "Escaleno") ) ) ) ; Una empresa comercializa diferentes tipos de bidones de agua. El precio del bidón depende de la cantidad de agua que contenga. El bidón de 10 litros cuesta ($15.000, El bidón de 20 litros, cuesta el $28.000 y el bidón de 50 litros cuesta $70000, El monto total de la compra será ingresado por el operador.
+ ; a) Definir una función, que permita ingresar el monto total de la compra por parte del operador y llame a
+ ; cada una de las funciones que se solicitan a continuación:
+ ; 1. Definir una función, la que a partir del monto ingresado como parámetro, devuelva una lista formada por sublistas. Cada sublista tendrá como primer elemento un texto que indique el tipo de bidón y como segundo elemento, la cantidad de bidones que se podrían comprar con el monto ingresado para ese tipo de bidón.
+ ; 2. El monto total de la compra puede sufrir un descuento que dependerá del siguiente detalle:
+ ; • Si el monto a abonar es menor o igual a $75.000, no sufre descuento
+ ; • Si el monto a abonar varía entre $75.000 y $200.000, sufre un descuento de $30.000
+ ; • Si el monto a abonar es mayor a $200.000, sufre un descuento de $50.000
+ ; Definir una función, la que a partir del monto ingresado como parámetro, devuelva el nuevo monto a abonar.
+ ; 3. Definir una función predicado, la que a partir del monto ingresado como parámetro, evalúe si con ese monto se pueden comprar 2 bidones de 10 Its y 4 bidones de 50 litros.
+ 
+
+(defun bidones (monto) 
+  (if 
+    (and (numberp monto) (> monto 0)) 
+    (let 
+      ( 
+        (bidon10 (/ monto 15000)) 
+        (bidon20 (/ monto 28000)) 
+        (bidon50 (/ monto 70000))) 
+      (list 
+        (list "Bidón de 10 litros" bidon10) 
+        (list "Bidón de 20 litros" bidon20) 
+        (list "Bidón de 50 litros" bidon50)) ) 
+    (print "Monto inválido. Ingrese un número positivo."))) 
+
+(defun descuento (monto) 
+  (if 
+    (and (numberp monto) (> monto 0)) 
+    (cond 
+      ((<= monto 75000) monto) 
+      (
+        (and (> monto 75000) (<= monto 200000)) (- monto 30000)) 
+      ((> monto 200000) (- monto 50000))) 
+    (print "Monto inválido. Ingrese un número positivo."))) 
+
+(defun bidones-predicado (monto) 
+  (if 
+    (and (numberp monto) (> monto 0)) 
+    (let 
+      ( 
+        (costo-bidones 
+          (+ (* 2 15000) (* 4 70000))) 
+        (cantidad-bidones 
+          (/ monto costo-bidones))) 
+      (> cantidad-bidones 0)) 
+    (print "Monto inválido. Ingrese un número positivo."))) 
+
+(defun main () 
+  (print "Ingrese el monto total de la compra: ") 
+  (let ((monto (read))) 
+    (let 
+      (
+        (bidones-lista (bidones monto))) 
+      (print "Lista de bidones:") 
+      (dolist (bidon bidones-lista) (print bidon)) 
+      (let 
+        (
+          (nuevo-monto (descuento monto))) 
+        (print "Nuevo monto a abonar:") (print nuevo-monto) 
+        (if 
+          (bidones-predicado nuevo-monto) 
+          (print "Se pueden comprar 2 bidones de 10 litros y 4 bidones de 50 litros.") 
+          (print "No se pueden comprar 2 bidones de 10 litros y 4 bidones de 50 litros."))))))
