@@ -1,11 +1,14 @@
-(defun armo (A B) 
-  (cond 
-    ( 
-      (and (consp A) (consp B)) (append A B)) 
-    ( 
-      (and (consp A) (not (consp B))) (list A B)) 
-    ( 
-      (and (not (consp A)) (consp B)) (cons A B)) (T (list A B)))) 
+(declaim 
+  (sb-ext:muffle-conditions cl:warning)) 
+
+(defun ingresar-lista () 
+  (print "Ingrese la lista de notas") (setq notas (read)) ) ; (print(ingresar-lista)) 
+ 
+
+(defun predicado (lista) 
+  (cond ((endp lista) t) 
+    ((>= (car lista) 4) 
+      (predicado (cdr lista))) (t nil) ) ) 
 
 (print 
-  (armo (member 3' (+ 3 4)) (numberp 4)))
+  (predicado (ingresar-lista)))

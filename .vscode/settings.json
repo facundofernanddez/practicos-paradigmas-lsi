@@ -1,5 +1,5 @@
 {
-  "editor.defaultFormatter": "qingpeng.common-lisp",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[commonlisp]": {
     "editor.defaultFormatter": "rrepo.commonlisp-formatter"
   }

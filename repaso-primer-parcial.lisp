@@ -150,7 +150,7 @@
     (and (numberp monto) (> monto 0)) 
     (cond 
       ((<= monto 75000) monto) 
-      (
+      ( 
         (and (> monto 75000) (<= monto 200000)) (- monto 30000)) 
       ((> monto 200000) (- monto 50000))) 
     (print "Monto inválido. Ingrese un número positivo."))) 
@@ -171,15 +171,125 @@
   (print "Ingrese el monto total de la compra: ") 
   (let ((monto (read))) 
     (let 
-      (
+      ( 
         (bidones-lista (bidones monto))) 
       (print "Lista de bidones:") 
       (dolist (bidon bidones-lista) (print bidon)) 
       (let 
-        (
+        ( 
           (nuevo-monto (descuento monto))) 
         (print "Nuevo monto a abonar:") (print nuevo-monto) 
         (if 
           (bidones-predicado nuevo-monto) 
           (print "Se pueden comprar 2 bidones de 10 litros y 4 bidones de 50 litros.") 
-          (print "No se pueden comprar 2 bidones de 10 litros y 4 bidones de 50 litros."))))))
+          (print "No se pueden comprar 2 bidones de 10 litros y 4 bidones de 50 litros.")))))) ;Convertir la siguiente igualdad en una expresión Lisp. a * c-b* c= (a -b) * c
+ 
+
+(declaim 
+  (sb-ext:muffle-conditions cl:warning)) 
+
+(setq expresion '(= ((* (- a b) c)) (- (* a c) (* a b)))) ; A partir de la expresión obtenida en el pto a, determinar la cantidad de átomos y listas que tiene dicha expresión y detallar cuales son
+ ; (teniendo en cuenta que siempre evaluamos en el primer nivel) atomos 1 listas 2 
+ ; A partir de la expresión obtenida en el punto a, extraer el el primer átomo * utilizando las funciones que ud crea conveniente.
+ 
+
+(print 
+  (car 
+    (car (car (cdr expresion))))) ; Se registran en una lista los 10 números que salieron en la lotería y el número favorito en una variable.
+ ; a. Desarrollar una función que permita el ingreso por parte del operador de la lista y de la variable. La función debe poder llamar a cada una de las funciones solicitadas en los puntos b, c y d.
+ ; b. Definir una función predicado; la que a partir de la lista que será ingresada como parámetro, evalúe si el primer y último elemento que se informa en la lista son números pares.
+ ; C. Definir una función; la que a partir de la lista y el número favorito que serán ingresados como parámetros devuelva una nueva lista formada por dos sublistas, donde:
+ ; • La primer sublista contendrá el texto "numero favorito" y el valor de la variable que registra este dato.
+ ; • La segunda sublista contendrá el texto "numeros ganadores" y los elementos de la lista ingresada como parámetro. Ejemplo ("numeros ganadores" 23 15 61)
+ ; d. Definir una función; la que a partir de la lista y el numero favorito que serán ingresados como parámetros devuelva el siguiente mensaje:
+ ; "numero-ganador", si el favorito es igual al primer número de la lista
+ ; "salió-último", si el favorito es igual al último número de la lista
+ ; • "no-salió-favorito", si el número favorito no se encuentra en la lista.
+ 
+
+(declaim 
+  (sb-ext:muffle-conditions cl:warning)) 
+
+(setq lista '(30 23 87 49 29 18 57 92 34 94)) 
+
+(defun predicado (lista) 
+  (and 
+    (equal 
+      (mod (car(last lista)) 2) 0) 
+    (equal (mod (car lista) 2) 0))) ; (print(predicado lista))
+ 
+
+(defun formar-lista 
+  (lista numero-favorito) 
+  (list 
+    (list "numero favorito" numero-favorito) 
+    (cons "numero ganadores" lista)) ) ; (print 
+ ; (formar-lista lista 8))
+ 
+
+(defun mensaje (lista numero) 
+  (cond 
+    ( 
+      (equal (car lista) numero) "numero-ganador") 
+    ( 
+      (equal (car(last lista)) numero) "salio-ultimo") 
+    ( 
+      (not (member numero lista)) "no-salio-favorito") ) ) ; (print(mensaje lista 0))
+ 
+
+(defun principal () 
+  (print "Ingrese una lista de numeros") (setq lista1 (read)) 
+  (print "Ingrese un numero") (setq numero (read)) 
+  (if 
+    (or (not(consp lista1)) (not(numberp numero))) 
+    (print "Ingrese valores correctos")) 
+  (progn 
+    (print (predicado lista1)) 
+    (print 
+      (formar-lista lista1 numero)) 
+    (print 
+      (mensaje lista1 numero)) ) ) ; (principal) 
+ ; Tema 1
+ 
+
+(declaim 
+  (sb-ext:muffle-conditions cl:warning)) 
+
+(setq expresion2 '(* k 
+  (expt (+ 1 (/ i m)) (* m t)))) ; atomos 2 y listas 1
+ 
+
+(print 
+  (car 
+    (car 
+      (cdr 
+        (car 
+          (cdr (cdr expresion2))))))) 
+
+(declaim 
+  (sb-ext:muffle-conditions cl:warning)) 
+
+(defun imprimir-mensaje (dinero valorm3) 
+  (cond 
+    ( (< dinero valorm3) "monto insuficiente") 
+    ( 
+      (equal dinero (* valorm3 2)) "monto justo") 
+    ( 
+      (> dinero (/ valorm3 2)) "monto suficiente") ) ) 
+
+(defun predicado 
+  (dinero valorm3arena valorm3piedra) 
+  (>= dinero 
+    (+ (* valorm3arena 4) (* valorm3arena 1.5))) ) ; (print (predicado 43 34 32))
+ 
+
+(defun formar-lista 
+  (dinero valorm3arena valorm3piedra) 
+  (list 
+    (list "arena" dinero 
+      (/ dinero valorm3arena)) 
+    (list "piedra" dinero 
+      (/ dinero valorm3piedra))) ) 
+
+(print 
+  (formar-lista 3000 32 45))
