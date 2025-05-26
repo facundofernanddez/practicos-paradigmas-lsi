@@ -85,7 +85,18 @@
           (setq numero (length(car lista)))) lista-nueva) 
       (crear-sublistas (cdr lista))) 
     (t 
-      (crear-sublistas (cdr lista))) ) ) 
+      (crear-sublistas (cdr lista))) ) ) ; (print (crear-sublistas (ingresar-lista)))
+ 
+
+(defun es-lista (lista) 
+  (cond 
+    ((endp lista) lista-nueva) 
+    ((consp (car lista)) 
+      (push (consp (car lista)) lista-nueva) 
+      (es-lista (cdr lista))) 
+    (t 
+      (push (consp (car lista)) lista-nueva) 
+      (es-lista (cdr lista))) ) ) 
 
 (print 
-  (crear-sublistas (ingresar-lista)))
+  (es-lista(ingresar-lista)))
