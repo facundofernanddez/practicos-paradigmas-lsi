@@ -1,14 +1,21 @@
 (declaim 
   (sb-ext:muffle-conditions cl:warning)) 
 
-(defun ingresar-lista () 
-  (print "Ingrese la lista de notas") (setq notas (read)) ) ; (print(ingresar-lista)) 
- 
+(defun ingresar-lista() 
+  (print "Ingrese una lista") (setq lista (read)) ) 
 
-(defun predicado (lista) 
-  (cond ((endp lista) t) 
-    ((>= (car lista) 4) 
-      (predicado (cdr lista))) (t nil) ) ) 
+(setq lista-nueva '()) 
+
+(defun crear-sublistas (lista) 
+  (cond 
+    ((endp lista) lista-nueva) 
+    ((consp(car lista)) 
+      (push 
+        (list (car lista) 
+          (setq numero (length(car lista)))) lista-nueva) 
+      (crear-sublistas (cdr lista))) 
+    (t 
+      (crear-sublistas (cdr lista))) ) ) 
 
 (print 
-  (predicado (ingresar-lista)))
+  (crear-sublistas (ingresar-lista)))
