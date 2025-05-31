@@ -4,23 +4,19 @@
 (defun ingresar-lista() 
   (print "Ingrese una lista") (setq lista (read)) ) 
 
-(defun crear-sublistas (lista) 
-  (cond ((endp lista) nil) 
-    ((consp (car lista)) 
+(defun diferencia-lista (lista1 lista2) 
+  (cond 
+    ( 
+      (and(endp lista1) (endp lista2)) nil) 
+    ( 
+      (and 
+        (numberp (car lista1)) 
+        (numberp (car lista2))) 
       (cons 
-        (list (car lista) (length(car lista))) 
-        (crear-sublistas (cdr lista))) ) 
+        (- (car lista1) (car lista2)) 
+        (diferencia-lista (cdr lista1) (cdr lista2))) ) 
     (t 
-      (crear-sublistas (cdr lista))) ) ) ; (print (crear-sublistas (ingresar-lista))) 
- 
+      (diferencia-lista (cdr lista1) (cdr lista2))) ) ) 
 
-(defun es-lista (lista) 
-  (cond ((endp lista) nil) 
-    ((not(endp lista)) 
-      (cons (consp (car lista)) 
-        (es-lista (cdr lista)))) 
-    (t 
-      (es-lista (cdr lista))) ) ) 
-
-(print 
-  (es-lista(ingresar-lista)))
+(print
+  (diferencia-lista (ingresar-lista) (ingresar-lista)))
