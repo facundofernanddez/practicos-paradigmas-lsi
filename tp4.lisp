@@ -37,18 +37,15 @@
       (ascendente (cdr lista))) (t nil))) ; (print (ascendente max_enero))
  
 
-(setq lista-nueva '()) 
-
 (defun sin-repetir (lista) 
-  (cond 
-    ((endp lista) lista-nueva) 
+  (cond ((endp lista) nil) 
     ( 
       (equal 
-        (member (car lista) lista-nueva) nil) 
-      (push (car lista) lista-nueva) 
-      (sin-repetir (cdr lista))) 
+        (member (car lista) (cdr lista)) nil) 
+      (cons (car lista) 
+        (sin-repetir (cdr lista))) ) 
     (t 
-      (sin-repetir (cdr lista))) )) ; (print (sin-repetir max_enero))
+      (sin-repetir (cdr lista))) )) ; (print (sin-repetir max_enero)) 
  ; A partir de una lista con las Notas de los parciales de un alumno, que es ingresada por el operador, definir una función predicado llamada Aprobado. La función debe evaluar si la materia está aprobada. Una materia está aprobada si todas las notas son 4 o valores mayores a 4
  
 
@@ -62,7 +59,7 @@
 (defun predicado (lista) 
   (cond ((endp lista) t) 
     ((>= (car lista) 4) 
-      (predicado (cdr lista))) (t nil) ) ) ; (print (predicado (ingresar-lista)))
+      (predicado (cdr lista))) (t nil) ) ) ; (print (predicado (ingresar-lista))) 
  ; A partir de una lista heterogénea que es ingresada por el operador, definir una función que permita el ingreso de dicha lista y pueda resolver cada una de las siguientes situaciones:
  ; • Definir una función que permita devolver una lista cuyos elementos serán sublistas. Cada sublista estará conformada por el elemento que sea una sublista de la lista ingresada por el operador junto con su longitud.
  ; • A partir de una lista heterogénea que es ingresada como parámetro, definir una función que devuelva una lista cuyos elementos son el resultado de evaluar uno a uno si cada uno elemento de la lista ingresada como parámetro es una sublista. 
@@ -74,29 +71,21 @@
 (defun ingresar-lista() 
   (print "Ingrese una lista") (setq lista (read)) ) 
 
-(setq lista-nueva '()) 
-
 (defun crear-sublistas (lista) 
-  (cond 
-    ((endp lista) lista-nueva) 
-    ((consp(car lista)) 
-      (push 
-        (list (car lista) 
-          (setq numero (length(car lista)))) lista-nueva) 
-      (crear-sublistas (cdr lista))) 
+  (cond ((endp lista) nil) 
+    ((consp (car lista)) 
+      (cons 
+        (list (car lista) (length(car lista))) 
+        (crear-sublistas (cdr lista))) ) 
     (t 
-      (crear-sublistas (cdr lista))) ) ) ; (print (crear-sublistas (ingresar-lista)))
+      (crear-sublistas (cdr lista))) ) ) ; (print (crear-sublistas (ingresar-lista))) 
  
 
 (defun es-lista (lista) 
-  (cond 
-    ((endp lista) lista-nueva) 
-    ((consp (car lista)) 
-      (push (consp (car lista)) lista-nueva) 
-      (es-lista (cdr lista))) 
+  (cond ((endp lista) nil) 
+    ((not(endp lista)) 
+      (cons (consp (car lista)) 
+        (es-lista (cdr lista)))) 
     (t 
-      (push (consp (car lista)) lista-nueva) 
-      (es-lista (cdr lista))) ) ) 
-
-(print 
-  (es-lista(ingresar-lista)))
+      (es-lista (cdr lista))) ) ) ; (print (es-lista(ingresar-lista))) 
+ ; A partir de dos listas ingresadas como parámetros, definir una función que devuelva una nueva lista donde cada elemento sea el resultado de la diferencia de los elementos de la lista 1 con los elementos de la lista 2 que se encuentren en la misma posición
