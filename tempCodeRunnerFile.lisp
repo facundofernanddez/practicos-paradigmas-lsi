@@ -1,22 +1,26 @@
 (declaim 
   (sb-ext:muffle-conditions cl:warning)) 
 
-(defun ingresar-lista() 
-  (print "Ingrese una lista") (setq lista (read)) ) 
+(defun suma (lista) 
+  (cond ((endp lista) 0) 
+    ((numberp (car lista)) 
+      (+ (car lista) (suma (cdr lista))) ) 
+    (t (suma (cdr lista)))) ) 
 
-(defun diferencia-lista (lista1 lista2) 
-  (cond 
-    ( 
-      (and(endp lista1) (endp lista2)) nil) 
-    ( 
-      (and 
-        (numberp (car lista1)) 
-        (numberp (car lista2))) 
-      (cons 
-        (- (car lista1) (car lista2)) 
-        (diferencia-lista (cdr lista1) (cdr lista2))) ) 
+(defun mas-grande (lista) 
+  (cond ((endp lista) nil) 
+    ((endp (cdr lista)) (car lista)) 
     (t 
-      (diferencia-lista (cdr lista1) (cdr lista2))) ) ) 
+      (max (car lista) 
+        (mas-grande (cdr lista)))) ) ) ; (print (mas-grande '(23 4 5 78 90 120))) 
+ 
 
-(print
-  (diferencia-lista (ingresar-lista) (ingresar-lista)))
+(defun mas-chico (lista) 
+  (cond ((endp lista) nil) 
+    ((endp (cdr lista)) (car lista)) 
+    (t 
+      (min (car lista) 
+        (mas-chico (cdr lista)))) ) ) 
+
+(print 
+  (mas-chico '(23 4 5 78 90 120))) 

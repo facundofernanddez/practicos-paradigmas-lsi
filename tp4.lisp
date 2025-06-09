@@ -110,3 +110,89 @@
         (diferencia-lista (cdr lista1) (cdr lista2))) ) 
     (t 
       (diferencia-lista (cdr lista1) (cdr lista2))) ) ) ; (print (diferencia-lista (ingresar-lista) (ingresar-lista)))
+ ; A partir de una lista que es ingresada por el operador, definir una función que devuelva una nueva lista conteniendo dos sublistas. La primer sublista estará formada por los elementos de la lista original que son números pares. La segunda sublista estará formada por los elementos de la lista original que son números impares. 
+ 
+
+(declaim 
+  (sb-ext:muffle-conditions cl:warning)) 
+
+(defun ingresar-lista() 
+  (print "Ingrese una lista") (setq lista (read)) ) 
+
+(defun pares-impares (lista) 
+  (cond ((endp lista) nil) 
+    ( 
+      (equal (mod (car lista) 2) 0) 
+      (setq resultado 
+        (pares-impares (cdr lista))) 
+      (list 
+        (cons (car lista) (car resultado)) (cadr resultado)) ) 
+    ( 
+      (not 
+        (equal (mod (car lista) 2) 0)) 
+      (setq resultado 
+        (pares-impares (cdr lista))) 
+      (list (car resultado) 
+        (cons (car lista) (cadr resultado))) ) 
+    (t 
+      (pares-impares (cdr lista))) ) ) 
+
+(print 
+  (pares-impares (ingresar-lista))) ; En la compañía telefónica FunTel modelan la historia de llamadas del usuario mediante una lista conteniendo dos sublistas.
+ ; • la primer sublista corresponde al tiempo de duraciones de llamadas (en minutos) en el horario normal
+ ; • la segunda sublista corresponde al tiempo de duraciones de llamadas (en minutos) en el horario reducido
+ ; Se necesita que desarrollen las siguientes funciones:
+ ; 1. cuandoHabloMas, que determine en que horario hablo mas. Si en los dos hablo la misma cantidad, responder IGUAL
+ ; 2. LLamadaMasLarga: que determine cuál fue la llamada más larga y en que horario
+ ; 3. LLamadaMasCorta: que determine cuál fue la llamada más corta y en que horario
+ 
+
+(declaim 
+  (sb-ext:muffle-conditions cl:warning)) 
+
+(defun suma (lista) 
+  (cond ((endp lista) 0) 
+    ((numberp (car lista)) 
+      (+ (car lista) (suma (cdr lista))) ) 
+    (t (suma (cdr lista)))) ) 
+
+(defun mas-grande (lista) 
+  (cond ((endp lista) nil) 
+    ((endp (cdr lista)) (car lista)) 
+    (t 
+      (max (car lista) 
+        (mas-grande (cdr lista)))) ) ) ; (print (mas-grande '(23 4 5 78 90 120))) 
+ 
+
+(defun mas-chico (lista) 
+  (cond ((endp lista) nil) 
+    ((endp (cdr lista)) (car lista)) 
+    (t 
+      (min (car lista) 
+        (mas-chico (cdr lista)))) ) ) ; (print (mas-chico '(23 4 5 78 90 120))) 
+ 
+
+(defun cuandoHabloMas (lista) 
+  (setq resultado1 (suma (car lista))) 
+  (setq resultado2 (suma (cadr lista))) 
+  (cond 
+    ( 
+      (> resultado1 resultado2) "normal") 
+    ( 
+      (> resultado2 resultado1) "reducido") 
+    ( 
+      (= resultado1 resultado2) "igual") ) ) ; (print (cuandohablomas '((34 54 98 89 23) (34 54 98 89 23))))
+ 
+
+(defun llamadaMasLarga (lista) 
+  (setq resultado1 
+    (mas-grande (car lista))) 
+  (setq resultado2 
+    (mas-grande (cadr lista))) 
+  (if 
+    (> resultado1 resultado2) 
+    (format t "~a Normal" resultado1) 
+    (format t "~a Reducido" resultado2) ) ) 
+
+(print 
+  (llamadamaslarga '((100 38 484 98 2) (34 54 98 89 23))))
