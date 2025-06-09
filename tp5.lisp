@@ -1,0 +1,2 @@
+; Actividad Nº 3.
+ ; Definir una función; la que a partir de una lista ingresada por el operador; devuelva una nueva lista cuyos elementos sean el resultado de evaluar si cada elemento de la lista original es o no un elemento numérico
