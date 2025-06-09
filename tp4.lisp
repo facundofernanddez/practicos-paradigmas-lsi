@@ -195,4 +195,12 @@
     (format t "~a Reducido" resultado2) ) ) 
 
 (print 
-  (llamadamaslarga '((100 38 484 98 2) (34 54 98 89 23))))
+  (llamadamaslarga '((100 38 484 98 2) (34 54 98 89 23)))) ; El tamaño de los archivos guardados en una computadora se registran en dos listas diferentes de la siguiente manera:
+ ; • arch_graficos (cada elemento de la lista contiene el tamaño de un archivo gráfico)
+ ; • arch_texto (cada elemento de la lista contiene el tamaño de un archivo de texto)
+ ; Se tiene también una variable que contiene un tamaño
+ ; Desarrollar una función que permite ingresar las listas, la variable y ejecute las funciones que se solicitan en los puntos 1, 2 y 3.
+ ; 1. Desarrollar una función predicado que determine si el tamaño del primer archivo gráfico es igual al tamaño del último archivo gráfico
+ ; 2. Desarrollar una función que determine si los archivos gráficos ocupan más espacio que los archivos de texto.
+ ; 3. Definir una función, la que a partir de las dos listas y la variable, genere una nueva lista
+ ; con el resultado de sumar los tamaños que se encuentran en la misma posición de la lista, siempre y cuando esa suma sea mayor al valor de la variable.
