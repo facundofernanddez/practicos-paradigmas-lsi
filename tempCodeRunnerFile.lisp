@@ -1,26 +1,24 @@
 (declaim 
   (sb-ext:muffle-conditions cl:warning)) 
 
-(defun suma (lista) 
-  (cond ((endp lista) 0) 
-    ((numberp (car lista)) 
-      (+ (car lista) (suma (cdr lista))) ) 
-    (t (suma (cdr lista)))) ) 
-
-(defun mas-grande (lista) 
-  (cond ((endp lista) nil) 
-    ((endp (cdr lista)) (car lista)) 
-    (t 
-      (max (car lista) 
-        (mas-grande (cdr lista)))) ) ) ; (print (mas-grande '(23 4 5 78 90 120))) 
+(defun es-numero (lista) 
+  (mapcar 'numberp lista) ) ; Actividad Nº 4:
+ ; Realizar los cambios necesarios en la función definida en la Actividad N° 3, de tal manera que el resultado de cada evaluación realizada devuelva la leyenda SI o NO.
  
 
-(defun mas-chico (lista) 
-  (cond ((endp lista) nil) 
-    ((endp (cdr lista)) (car lista)) 
-    (t 
-      (min (car lista) 
-        (mas-chico (cdr lista)))) ) ) 
+(defun es-numero2 (lista) 
+  (mapcar 
+    (lambda (x) 
+      (if (numberp x) "SI" "NO")) lista) ) ; (print (es-numero2 '(23 a 34 lsd 34 32)))
+ ; Actividad Nº 5:
+ ; Definir una función que solicite al operador el ingreso de una lista no vacía y un número entero, de tal manera que devuelva una lista formada por sublistas. Cada sublista estará formada por el elemento de la lista original junto con su potencia ( el exponte de la potencia será el número entero ingresado por el operador)
+ 
 
-(print 
-  (mas-chico '(23 4 5 78 90 120))) 
+(defun potencia () 
+  (print "Ingrese una lista no vacia") (setq lista (read)) 
+  (print "Ingrese un numero") (setq numero (read)) 
+  (mapcar 
+    (lambda (x) 
+      (if (numberp x) 
+        (list x (expt x numero)))) lista) ) 
+(print(potencia))
