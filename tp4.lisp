@@ -204,3 +204,13 @@
  ; 2. Desarrollar una función que determine si los archivos gráficos ocupan más espacio que los archivos de texto.
  ; 3. Definir una función, la que a partir de las dos listas y la variable, genere una nueva lista
  ; con el resultado de sumar los tamaños que se encuentran en la misma posición de la lista, siempre y cuando esa suma sea mayor al valor de la variable.
+ 
+
+(defun Máximos (lista) 
+  (cond 
+    ((endp (cdr lista)) (car lista)) ; Caso base: si queda un solo elemento, es el máximo
+ 
+    (
+      (> (car lista) (Máximos (cdr lista))) (car lista)) ; Si el primer elemento es mayor que el máximo del resto, devuelve el primero
+ 
+    (t (Máximos (cdr lista))))) ; Si no, devuelve el máximo del resto
