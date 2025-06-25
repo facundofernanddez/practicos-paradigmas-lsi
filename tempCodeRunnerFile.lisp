@@ -1,19 +1,16 @@
 (declaim 
   (sb-ext:muffle-conditions cl:warning)) 
 
-(defun diasiguales (lista1 lista2) 
+(defun juntar (lista1 lista2) 
   (cond 
     ( 
-      (or (endp lista1) (endp lista2)) 0) 
+      (or (endp lista1) (endp lista2)) nil) 
     ( 
-      (and 
-        (numberp (car lista1)) 
-        (numberp (car lista2)) 
-        (= (car lista1) (car lista2))) 
-      (+ 1 
-        (diasiguales (cdr lista1) (cdr lista2)))) 
+      (cons 
+        (list (car lista1) (car lista2) ) 
+        (juntar (cdr lista1) (cdr lista2)))) 
     (t 
-      (diasiguales (cdr lista1) (cdr lista2))) ) ) 
+      (juntar (cdr lista1) (cdr lista2))) ) ) 
 
 (print 
-  (diasiguales '(23 432 34 54 12) '(23 234 34 23 12)))
+  (juntar '(23 "asd" 456 23 nil) '(23 34 456 ("asdf" 34) 54 89)))
